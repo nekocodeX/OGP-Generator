@@ -43,3 +43,7 @@ python3 ogp-generator.py test.jpg -t "OGP-Generator" -d "OGP 用画像をいい�
 ## 🙇‍♂️ 謝辞
 
 本ソフトウェアで使用しているフォント [Koruri](https://koruri.github.io) の作者 [lindwurm](https://github.com/lindwurm)
+
+## © ライセンス
+
+The MIT License (MIT)
