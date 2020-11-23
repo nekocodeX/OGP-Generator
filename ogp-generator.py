@@ -4,7 +4,7 @@ import argparse
 from argparse import RawTextHelpFormatter
 from PIL import Image, ImageDraw, ImageFont, ImageOps, UnidentifiedImageError
 
-VERSION = "v0.0.0"
+VERSION = "v0.0.1"
 
 
 def generate_ogp(ogp_bg, width=1200, height=630, mode="t",
