@@ -10,6 +10,22 @@ VERSION = "v0.0.0"
 def generate_ogp(ogp_bg, width=1200, height=630, mode="t",
                  overlay_width=1200, overlay_height=300, overlay_opacity=0.75,
                  title_text="", description_text=""):
+    """OGP用画像生成
+
+    Args:
+        ogp_bg (PIL.Image): OGP背景用画像
+        width (int, optional): OGP用画像の横幅 (px). Defaults to 1200.
+        height (int, optional): OGP用画像の高さ (px). Defaults to 630.
+        mode (str, optional): OGP背景用画像のトリミング位置 (t, c, b). Defaults to "t".
+        overlay_width (int, optional): オーバーレイの横幅 (px). Defaults to 1200.
+        overlay_height (int, optional): オーバーレイの高さ (px). Defaults to 300.
+        overlay_opacity (float, optional): オーバーレイの不透明度 (% / 100). Defaults to 0.75.
+        title_text (str, optional): OGP用画像内のタイトル. Defaults to "".
+        description_text (str, optional): OGP用画像内の説明. Defaults to "".
+
+    Returns:
+        PIL.Image: 生成したOGP用画像
+    """
     mode_dict = {
         "t": (0.5, 0.0),  # Top
         "c": (0.5, 0.5),  # Center
@@ -46,11 +62,11 @@ def generate_ogp(ogp_bg, width=1200, height=630, mode="t",
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="OGP用画像をいい感じに生成するプログラム by nekocodeX",
-                                     epilog="このソフトウェアは個人用に開発しているものですが、OSSとして公開しています。\nフィードバック等ありましたら、IssueやPull requestを是非送ってください。\n\nGitHub Repo: https://github.com/nekocodeX/OGP-Generator", formatter_class=RawTextHelpFormatter)
+                                     epilog="本ソフトウェアは個人用に開発しているものですが、OSSとして公開しています。\nフィードバック等ありましたら、IssueやPull requestを是非送ってください。\n\nGitHub Repo: https://github.com/nekocodeX/OGP-Generator", formatter_class=RawTextHelpFormatter)
     parser.add_argument("-V", "--version",
                         action="version",
                         version=VERSION)
-    parser.add_argument("ogp_bg", help="OGP背景用の画像のパス", type=str)
+    parser.add_argument("ogp_bg", help="OGP背景用画像のパス", type=str)
     parser.add_argument("-t", "--title", help="OGP用画像内のタイトル", type=str)
     parser.add_argument("-d", "--description", help="OGP用画像内の説明", type=str)
     parser.add_argument("-p", "--position", help="OGP背景用画像のトリミング位置\nt => Top, c => Center, b => Bottom",
