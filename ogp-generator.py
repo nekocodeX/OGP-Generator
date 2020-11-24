@@ -63,9 +63,7 @@ def generate_ogp(ogp_bg, width=1200, height=630, mode="t",
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="OGP用画像をいい感じに生成するプログラム by nekocodeX",
                                      epilog="本ソフトウェアは個人用に開発しているものですが、OSSとして公開しています。\nフィードバック等ありましたら、IssueやPull requestを是非送ってください。\n\nGitHub Repo: https://github.com/nekocodeX/OGP-Generator", formatter_class=RawTextHelpFormatter)
-    parser.add_argument("-V", "--version",
-                        action="version",
-                        version=VERSION)
+    parser.add_argument("-V", "--version", action="version", version=VERSION)
     parser.add_argument("ogp_bg", help="OGP背景用画像のパス", type=str)
     parser.add_argument("-t", "--title", help="OGP用画像内のタイトル", type=str)
     parser.add_argument("-d", "--description", help="OGP用画像内の説明", type=str)
