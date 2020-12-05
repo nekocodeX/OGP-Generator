@@ -69,6 +69,7 @@ if __name__ == "__main__":
     parser.add_argument("-d", "--description", help="OGP用画像内の説明", type=str)
     parser.add_argument("-p", "--position", help="OGP背景用画像のトリミング位置\nt => Top, c => Center, b => Bottom",
                         type=str, choices=["t", "c", "b"], default="t")
+    parser.add_argument("-o", "--output", help="生成OGP用画像のファイル名 (拡張子を含む)", type=str, default="ogp.png")
 
     args = parser.parse_args()
 
@@ -81,5 +82,11 @@ if __name__ == "__main__":
         print("[ERROR]", "指定されたOGP背景用画像が非対応です")
         sys.exit(-1)
 
-    generate_ogp(ogp_bg, mode=args.position, title_text=args.title, description_text=args.description).save("ogp.png")
-    print("[INFO]", "生成完了:", os.path.abspath("./ogp.png"))
+    try:
+        generate_ogp(ogp_bg, mode=args.position, title_text=args.title,
+                     description_text=args.description).save("./" + args.output)
+    except ValueError:
+        print("[ERROR]", "指定された生成OGP用画像のファイル名 (拡張子を含む) が非対応です")
+        sys.exit(-1)
+
+    print("[INFO]", "生成完了:", os.path.abspath("./" + args.output))
