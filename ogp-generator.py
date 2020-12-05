@@ -4,7 +4,7 @@ import argparse
 from argparse import RawTextHelpFormatter
 from PIL import Image, ImageDraw, ImageFont, ImageOps, UnidentifiedImageError
 
-VERSION = "v0.0.1"
+VERSION = "v0.1.0"
 
 
 def generate_ogp(ogp_bg, width=1200, height=630, mode="t",
@@ -63,14 +63,13 @@ def generate_ogp(ogp_bg, width=1200, height=630, mode="t",
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="OGP用画像をいい感じに生成するプログラム by nekocodeX",
                                      epilog="本ソフトウェアは個人用に開発しているものですが、OSSとして公開しています。\nフィードバック等ありましたら、IssueやPull requestを是非送ってください。\n\nGitHub Repo: https://github.com/nekocodeX/OGP-Generator", formatter_class=RawTextHelpFormatter)
-    parser.add_argument("-V", "--version",
-                        action="version",
-                        version=VERSION)
+    parser.add_argument("-V", "--version", action="version", version=VERSION)
     parser.add_argument("ogp_bg", help="OGP背景用画像のパス", type=str)
     parser.add_argument("-t", "--title", help="OGP用画像内のタイトル", type=str)
     parser.add_argument("-d", "--description", help="OGP用画像内の説明", type=str)
     parser.add_argument("-p", "--position", help="OGP背景用画像のトリミング位置\nt => Top, c => Center, b => Bottom",
                         type=str, choices=["t", "c", "b"], default="t")
+    parser.add_argument("-o", "--output", help="生成OGP用画像のファイル名 (拡張子を含む)", type=str, default="ogp.png")
 
     args = parser.parse_args()
 
@@ -83,5 +82,11 @@ if __name__ == "__main__":
         print("[ERROR]", "指定されたOGP背景用画像が非対応です")
         sys.exit(-1)
 
-    generate_ogp(ogp_bg, mode=args.position, title_text=args.title, description_text=args.description).save("ogp.png")
-    print("[INFO]", "生成完了:", os.path.abspath("./ogp.png"))
+    try:
+        generate_ogp(ogp_bg, mode=args.position, title_text=args.title,
+                     description_text=args.description).save("./" + args.output)
+    except ValueError:
+        print("[ERROR]", "指定された生成OGP用画像のファイル名 (拡張子を含む) が非対応です")
+        sys.exit(-1)
+
+    print("[INFO]", "生成完了:", os.path.abspath("./" + args.output))
