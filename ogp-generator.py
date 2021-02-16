@@ -4,7 +4,7 @@ import argparse
 from argparse import RawTextHelpFormatter
 from PIL import Image, ImageDraw, ImageFont, ImageOps, UnidentifiedImageError
 
-VERSION = "v0.1.0"
+VERSION = "v0.2.0"
 
 
 class TextTooLongError(Exception):
