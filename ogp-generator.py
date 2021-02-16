@@ -4,7 +4,13 @@ import argparse
 from argparse import RawTextHelpFormatter
 from PIL import Image, ImageDraw, ImageFont, ImageOps, UnidentifiedImageError
 
-VERSION = "v0.1.0"
+VERSION = "v0.2.0"
+
+
+class TextTooLongError(Exception):
+    """指定された文字が長すぎる
+    """
+    pass
 
 
 def generate_ogp(ogp_bg, width=1200, height=630, mode="t",
@@ -49,11 +55,17 @@ def generate_ogp(ogp_bg, width=1200, height=630, mode="t",
             description_font_size[0], title_font_size[1] + description_font_size[1] - 20
 
         # タイトル描画
-        draw.text((overlay_width // 2 - title_font_size[0] // 2, overlay_height //
-                   2 - font_size_height // 2 - description_font_size[1] // 2 - 12), title_text, font=title_font, fill="#FFFFFF")
+        if draw.textsize(title_text, title_font)[0] <= overlay_width:
+            draw.text((overlay_width // 2 - title_font_size[0] // 2, overlay_height // 2 - font_size_height //
+                       2 - description_font_size[1] // 2 - 12), title_text, font=title_font, fill="#FFFFFF")
+        else:
+            raise TextTooLongError("指定されたOGP用画像内のタイトルが長すぎます")
         # 説明描画
-        draw.text((overlay_width // 2 - description_font_size[0] // 2, overlay_height //
-                   2 + description_font_size[1] // 2 + 3), description_text, font=description_font, fill="#FFFFFF")
+        if draw.textsize(description_text, description_font)[0] <= overlay_width:
+            draw.text((overlay_width // 2 - description_font_size[0] // 2, overlay_height // 2 +
+                       description_font_size[1] // 2 + 3), description_text, font=description_font, fill="#FFFFFF")
+        else:
+            raise TextTooLongError("指定されたOGP用画像内の説明が長すぎます")
 
     canvas.paste(overlay, (0, 165), overlay)
 
@@ -85,6 +97,9 @@ if __name__ == "__main__":
     try:
         generate_ogp(ogp_bg, mode=args.position, title_text=args.title,
                      description_text=args.description).save("./" + args.output)
+    except TextTooLongError as e:
+        print("[ERROR]", e)
+        sys.exit(-1)
     except ValueError:
         print("[ERROR]", "指定された生成OGP用画像のファイル名 (拡張子を含む) が非対応です")
         sys.exit(-1)
