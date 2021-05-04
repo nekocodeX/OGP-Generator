@@ -46,4 +46,4 @@ python3 ogp-generator.py test.jpg -t "OGP-Generator" -d "OGP 用画像をいい�
 
 ## ©️ ライセンス
 
-The MIT License (MIT)
+MIT License
